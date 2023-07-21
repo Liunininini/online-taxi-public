@@ -4,6 +4,7 @@ import com.example.internalcommon.dto.ResponseResult;
 import com.example.internalcommon.responese.NumberCodeResponse;
 import net.sf.json.JSONObject;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,7 +21,7 @@ public class NumberCodeController {
         //获取随机数
         double mathRandom = (Math.random() * 9 + 1) * Math.pow(10, size - 1);
         int resultInt = (int) mathRandom;
-
+        System.out.println("gen int is :" + resultInt);
 //        JSONObject result = new JSONObject();
 //        result.put("code", 1);
 //        result.put("success", "success");
