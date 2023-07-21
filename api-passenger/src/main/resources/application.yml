@@ -7,4 +7,10 @@ spring:
 
   application:
     name: api-passenger
+  redis:
+    host:  127.0.0.1
+    post: 6379
+    daatabase: 0
+
+
 

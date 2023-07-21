@@ -1,5 +1,6 @@
 package com.mashibing.apipassenger.controller;
 
+import com.example.internalcommon.dto.ResponseResult;
 import com.mashibing.apipassenger.request.VerificationCodeDTO;
 import com.mashibing.apipassenger.service.VerificationCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,10 @@ public class VerificationCodeController {
     private VerificationCodeService verificationCodeService;
 
     @GetMapping("/verification-code")
-    public String verificationCode(@RequestBody VerificationCodeDTO  verificationCodeDTO){
+    public ResponseResult verificationCode(@RequestBody VerificationCodeDTO verificationCodeDTO) {
 
         String passengerPhone = verificationCodeDTO.getPassengerPhone();
-        System.out.println("接收到的手机号"+passengerPhone);
+        System.out.println("接收到的手机号" + passengerPhone);
         return verificationCodeService.generatorCOde(passengerPhone);
 
     }
