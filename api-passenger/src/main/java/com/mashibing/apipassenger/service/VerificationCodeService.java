@@ -52,13 +52,16 @@ public class VerificationCodeService {
     public ResponseResult verificationCodeCheck(String passengerPhone, String verificationCode) {
         String key = generatorKeyByPhone(passengerPhone);
         String codeRedis = stringRedisTemplate.opsForValue().get(key);
-        log.info("redis value is {}",codeRedis);
-        if (!Objects.equals(codeRedis,verificationCode)){
-            return ResponseResult.fail(500,"验证码不正确");
+        log.info("redis value is {}", codeRedis);
+        if (!Objects.equals(codeRedis, verificationCode)) {
+            return ResponseResult.fail(500, "验证码不正确");
         }
+        //判断是否有用户
+
+        //颁发token
         TokenResponse tokenResponse = new TokenResponse();
         tokenResponse.setToken("token value");
-       return ResponseResult.success(tokenResponse);
+        return ResponseResult.success(tokenResponse);
 
     }
 

@@ -13,9 +13,14 @@ spring:
     daatabase: 0
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql:localhost:3306/service-passenger-user?characterEncoding=utf-8&serverTimeZones=GMT%2B8
+    url: jdbc:mysql://localhost:3306/service-passenger-user?characterEncoding=utf-8&serverTimeZones=GMT%2B8
     username: root
     password: root
 
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    serialization:
+      write-dates-as-timestamps: false
 
 

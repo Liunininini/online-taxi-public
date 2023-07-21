@@ -13,9 +13,10 @@ import javax.annotation.Resource;
 public class UserController {
     @Resource
     private UserService userService;
+
     @PostMapping("/user")
-    public ResponseResult loginOrReg(@RequestBody VerificationCodeDTO verificationCodeDTO){
+    public ResponseResult loginOrReg(@RequestBody VerificationCodeDTO verificationCodeDTO) {
         String pasengerPhone = verificationCodeDTO.getPassengerPhone();
-        return  userService.loginOrReg(pasengerPhone);
+        return userService.loginOrReg(pasengerPhone);
     }
 }
