@@ -1,7 +1,7 @@
 package com.mashibing.apipassenger.controller;
 
 import com.example.internalcommon.dto.ResponseResult;
-import com.mashibing.apipassenger.request.VerificationCodeDTO;
+import com.example.internalcommon.request.VerificationCodeDTO;
 import com.mashibing.apipassenger.service.VerificationCodeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

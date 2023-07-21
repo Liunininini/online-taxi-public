@@ -19,6 +19,13 @@ public class ResponseResult<T> {
                 .setData(data);
     }
 
+    public static <T> ResponseResult success() {
+        return new ResponseResult()
+                .setCode(CommonStatusEnum.SUCCESS.getCode())
+                .setMessage(CommonStatusEnum.SUCCESS.getValue())
+                .setData(null);
+    }
+
     /**
      * 失败:自定义失败错误信息
      * @param code

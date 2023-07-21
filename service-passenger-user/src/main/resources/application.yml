@@ -11,6 +11,11 @@ spring:
     host:  127.0.0.1
     post: 6379
     daatabase: 0
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql:localhost:3306/service-passenger-user?characterEncoding=utf-8&serverTimeZones=GMT%2B8
+    username: root
+    password: root
 
 
 
