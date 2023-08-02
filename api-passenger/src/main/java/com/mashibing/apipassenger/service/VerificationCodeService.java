@@ -1,8 +1,12 @@
 package com.mashibing.apipassenger.service;
 
+import com.example.internalcommon.constant.IdentityConstant;
 import com.example.internalcommon.dto.ResponseResult;
 import com.example.internalcommon.dto.TokenResponse;
+import com.example.internalcommon.request.VerificationCodeDTO;
 import com.example.internalcommon.responese.NumberCodeResponse;
+import com.example.internalcommon.util.JwtUtils;
+import com.mashibing.apipassenger.remote.ServicePassengerUserClient;
 import com.mashibing.apipassenger.remote.ServiceVefificationcodeClient;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -25,6 +29,9 @@ public class VerificationCodeService {
     private StringRedisTemplate stringRedisTemplate;
     //redis 前缀
     private String  verificationCodePrefix = "passenger-verification-code-";
+
+    @Resource
+    private ServicePassengerUserClient servicePassengerUserClient;
 
     /**
      * 获取验证码
@@ -56,11 +63,14 @@ public class VerificationCodeService {
         if (!Objects.equals(codeRedis, verificationCode)) {
             return ResponseResult.fail(500, "验证码不正确");
         }
+        VerificationCodeDTO verificationCodeDTO = new VerificationCodeDTO();
+        verificationCodeDTO.setPassengerPhone(passengerPhone);
         //判断是否有用户
-
+        servicePassengerUserClient.loginOrRegister(verificationCodeDTO);
         //颁发token
+        String token = JwtUtils.generatorTOken(passengerPhone, IdentityConstant.DRIVER_IDENTITY);
         TokenResponse tokenResponse = new TokenResponse();
-        tokenResponse.setToken("token value");
+        tokenResponse.setToken(token);
         return ResponseResult.success(tokenResponse);
 
     }
