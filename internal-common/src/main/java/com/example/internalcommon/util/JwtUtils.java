@@ -40,7 +40,7 @@ public class JwtUtils {
             builder.withClaim(k, v);
         });
         //整合过期时间
-        builder.withExpiresAt(date);
+//        builder.withExpiresAt(date);
         //生成token
         String sign = builder.sign(Algorithm.HMAC256(SIGN));
         return sign;
@@ -50,8 +50,8 @@ public class JwtUtils {
     //解析token
     public static TokenResult parseToken(String token) {
         DecodedJWT verify = JWT.require(Algorithm.HMAC256(SIGN)).build().verify(token);
-        String phoen = verify.getClaim(JWT_KEY_PHONE).toString();
-        String identity = verify.getClaim(JWT_KEY_IDENTITY).toString();
+        String phoen = verify.getClaim(JWT_KEY_PHONE).asString();
+        String identity = verify.getClaim(JWT_KEY_IDENTITY).asString();
         TokenResult result = new TokenResult();
         result.setIdentity(identity);
         result.setPhone(phoen);
