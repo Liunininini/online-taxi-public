@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.auth0.jwt.exceptions.AlgorithmMismatchException;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
+import com.example.internalcommon.constant.TokenConstants;
 import com.example.internalcommon.dto.ResponseResult;
 import com.example.internalcommon.dto.TokenResult;
 import com.example.internalcommon.util.JwtUtils;
@@ -30,36 +31,35 @@ public class JwtInterceptor implements HandlerInterceptor {
 
         String token = request.getHeader("Authorization");
         //解析token
-        TokenResult tokenResult = null;
-        try {
-             tokenResult = JwtUtils.parseToken(token);
-        } catch (SignatureVerificationException e) {
-            resutltString = "token sign error";
-            result = false;
-        } catch (TokenExpiredException e){
-            resutltString = "token time out";
-            result = false;
-        }catch (AlgorithmMismatchException e){
+        TokenResult tokenResult = JwtUtils.checkToken(token);
+        if (Objects.isNull(tokenResult)){
             resutltString = "token invalid";
             result = false;
-        }catch (Exception e){
-            resutltString = "token error";
-            result = false;
         }
+//        try {
+//             tokenResult = JwtUtils.parseToken(token);
+//        } catch (SignatureVerificationException e) {
+//            resutltString = "token sign error";
+//            result = false;
+//        } catch (TokenExpiredException e){
+//            resutltString = "token time out";
+//            result = false;
+//        }catch (AlgorithmMismatchException e){
+//            resutltString = "token invalid";
+//            result = false;
+//        }catch (Exception e){
+//            resutltString = "token error";
+//            result = false;
+//        }
         if (Objects.nonNull(tokenResult)) {
             //从redis中取出token
             String phone = tokenResult.getPhone();
             String identity = tokenResult.getIdentity();
-            String tokenKey = RedisPrefixUtils.generatorTokenKey(phone, identity);
+            String tokenKey = RedisPrefixUtils.generatorTokenKey(phone, identity, TokenConstants.ACCESS_TOKEN_TYPE);
             String tokenRedis = redisTemplate.opsForValue().get(tokenKey);
-            if (StringUtils.isBlank(tokenRedis)) {
+            if (StringUtils.isBlank(tokenRedis) || !token.trim().equals(tokenRedis.trim())) {
                 resutltString = "token time out";
                 result = false;
-            } else {
-                if (!token.trim().equals(tokenRedis.trim())) {
-                    resutltString = "token invalid";
-                    result = false;
-                }
             }
         }
 

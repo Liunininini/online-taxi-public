@@ -1,6 +1,7 @@
 package com.mashibing.apipassenger.service;
 
 import com.example.internalcommon.constant.IdentityConstant;
+import com.example.internalcommon.constant.TokenConstants;
 import com.example.internalcommon.dto.ResponseResult;
 import com.example.internalcommon.dto.TokenResponse;
 import com.example.internalcommon.request.VerificationCodeDTO;
@@ -10,8 +11,6 @@ import com.example.internalcommon.util.RedisPrefixUtils;
 import com.mashibing.apipassenger.remote.ServicePassengerUserClient;
 import com.mashibing.apipassenger.remote.ServiceVefificationcodeClient;
 import lombok.extern.slf4j.Slf4j;
-import lombok.val;
-import net.sf.json.JSONObject;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -70,12 +69,18 @@ public class VerificationCodeService {
         //判断是否有用户
         servicePassengerUserClient.loginOrRegister(verificationCodeDTO);
         //颁发token
-        String token = JwtUtils.generatorTOken(passengerPhone, IdentityConstant.PASSENGER_IDENTITY);
+        String accessToken = JwtUtils.generatorToken(passengerPhone, IdentityConstant.PASSENGER_IDENTITY, TokenConstants.ACCESS_TOKEN_TYPE);
+        String refreshToken = JwtUtils.generatorToken(passengerPhone, IdentityConstant.PASSENGER_IDENTITY, TokenConstants.REFRESH_TOKEN_TYPE);
+
+
         //将token存到redis中
-        String tokenKey = RedisPrefixUtils.generatorTokenKey(passengerPhone, IdentityConstant.PASSENGER_IDENTITY);
-        stringRedisTemplate.opsForValue().set(tokenKey, token, 30, TimeUnit.DAYS);
+        String accessTokenKey = RedisPrefixUtils.generatorTokenKey(passengerPhone, IdentityConstant.PASSENGER_IDENTITY,TokenConstants.ACCESS_TOKEN_TYPE);
+        stringRedisTemplate.opsForValue().set(accessTokenKey, accessToken, 30, TimeUnit.DAYS);
+        String refreshTokenKey = RedisPrefixUtils.generatorTokenKey(passengerPhone, IdentityConstant.PASSENGER_IDENTITY,TokenConstants.REFRESH_TOKEN_TYPE);
+        stringRedisTemplate.opsForValue().set(refreshTokenKey, refreshToken, 31, TimeUnit.DAYS);
         TokenResponse tokenResponse = new TokenResponse();
-        tokenResponse.setToken(token);
+        tokenResponse.setAccessToken(accessToken);
+        tokenResponse.setRefreshToken(refreshToken);
         return ResponseResult.success(tokenResponse);
 
     }

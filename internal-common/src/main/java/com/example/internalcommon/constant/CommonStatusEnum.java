@@ -5,6 +5,11 @@ import lombok.Getter;
 
 
 public enum CommonStatusEnum {
+
+    /**
+     * Token类提示1100-1199
+     */
+    TOKEN_ERROR(1199, "token错误"),
     SUCCESS(1, "success"),
     FAIL(0, "fail");
 

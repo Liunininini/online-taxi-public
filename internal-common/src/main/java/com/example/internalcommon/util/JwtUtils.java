@@ -4,10 +4,9 @@ import com.alibaba.fastjson.JSON;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.example.internalcommon.constant.TokenConstants;
 import com.example.internalcommon.dto.TokenResult;
-import net.sf.json.util.JSONUtils;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -23,12 +22,15 @@ public class JwtUtils {
     private static final String JWT_KEY_PHONE = "passengerPhone";
     //乘客是1,司机是2
     private static final String JWT_KEY_IDENTITY = "identity";
+    //token类型
+    private static final String JWT_TOKEN_TYPE = "tokenType";
 
     //生产token
-    public static String generatorTOken(String passengerPhone,String identity){
+    public static String generatorToken(String passengerPhone, String identity, String tokenType){
         Map<String,String> map = new HashMap<>();
         map.put(JWT_KEY_PHONE,passengerPhone);
         map.put(JWT_KEY_IDENTITY,identity);
+        map.put(JWT_TOKEN_TYPE,tokenType);
         //token 过期时间
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE,1);
@@ -58,11 +60,26 @@ public class JwtUtils {
         return result;
     }
 
+    /**
+     * 校验token
+     * @param token
+     * @return
+     */
+    public static TokenResult checkToken(String token){
+        //解析token
+        TokenResult tokenResult = null;
+        try {
+            tokenResult = JwtUtils.parseToken(token);
+        } catch (Exception e) {
+
+        }
+        return tokenResult;
+    };
     public static void main(String[] args) {
         Map<String,String> map = new HashMap<String,String>();
         map.put("name","zhangsan");
         map.put("age","18");
-        String s = generatorTOken("17691143527","1");
+        String s = generatorToken("17691143527","1", TokenConstants.ACCESS_TOKEN_TYPE);
         System.out.println(s);
 
         TokenResult result = parseToken(s);
