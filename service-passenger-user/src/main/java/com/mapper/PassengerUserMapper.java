@@ -1,9 +1,8 @@
 package com.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.dto.PassengerUser;
+import com.example.internalcommon.dto.PassengerUser;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
 
 /**
 * @author Administrator

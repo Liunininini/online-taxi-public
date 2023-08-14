@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mapper.PassengerUserMapper">
 
-    <resultMap id="BaseResultMap" type="com.dto.PassengerUser">
+    <resultMap id="BaseResultMap" type="com.example.internalcommon.dto.PassengerUser">
             <id property="id" column="id" jdbcType="INTEGER"/>
             <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
             <result property="gmtModified" column="gmt_modified" jdbcType="TIMESTAMP"/>

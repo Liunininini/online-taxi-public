@@ -1,14 +1,12 @@
-package com.dto;
+package com.example.internalcommon.dto;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Date;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Data;
 
 /**
  * 乘客用户表
@@ -54,5 +52,9 @@ public class PassengerUser implements Serializable {
      * 乘客状态:0有效,1无效
      */
     private Integer state;
+    /**
+     * 图片
+     */
+    private String profilePhoto;
 
 }

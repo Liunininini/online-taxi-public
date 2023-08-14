@@ -2,7 +2,7 @@ package com.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
-import com.dto.PassengerUser;
+import com.example.internalcommon.dto.PassengerUser;
 import com.mapper.PassengerUserMapper;
 import com.service.PassengerUserService;
 import org.springframework.stereotype.Service;
