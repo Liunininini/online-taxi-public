@@ -1,0 +1,22 @@
+server:
+  port: 8084
+spring:
+  cloud:
+    discovery:
+      service-addr: 127.0.0.1:8848
+
+  application:
+    name: service-price
+  redis:
+    host:  127.0.0.1
+    post: 6379
+    daatabase: 0
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    serialization:
+      write-dates-as-timestamps: false
+
+
+
